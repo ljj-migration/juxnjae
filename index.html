@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>개인적인 추천 가이드</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      line-height: 1.6;
+      color: #2c3e50;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    header {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 2rem 0;
+      text-align: center;
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    header h1 {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    header p {
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      opacity: 0.9;
+      font-weight: 300;
+    }
+    
+    main {
+      padding: 3rem 0;
+    }
+    
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .guide-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .guide-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+    }
+    
+    .guide-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    .guide-card h2 {
+      color: #2c3e50;
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .guide-card h2::before {
+      content: attr(data-number);
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    
+    .guide-list {
+      list-style: none;
+    }
+    
+    .guide-item {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background: rgba(103, 126, 234, 0.05);
+      border-radius: 12px;
+      border-left: 4px solid #667eea;
+      transition: all 0.2s ease;
+    }
+    
+    .guide-item:hover {
+      background: rgba(103, 126, 234, 0.1);
+      transform: translateX(5px);
+    }
+    
+    .tag {
+      display: inline-block;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 0.3rem 0.8rem;
+      margin-right: 0.8rem;
+      margin-bottom: 0.3rem;
+      box-shadow: 0 2px 8px rgba(103, 126, 234, 0.3);
+      transition: all 0.2s ease;
+    }
+    
+    .tag:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(103, 126, 234, 0.4);
+    }
+    
+    .intro-section {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    
+    .intro-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .tip-box {
+      background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 152, 0, 0.1));
+      border: 1px solid rgba(255, 193, 7, 0.3);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-top: 2rem;
+    }
+    
+    .tip-box h3 {
+      color: #f57c00;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .tip-box h3::before {
+      content: '💡';
+      font-size: 1.2rem;
+    }
+    
+    /* 반응형 디자인 */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 15px;
+      }
+      
+      .guide-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      .guide-card {
+        padding: 1.5rem;
+      }
+      
+      .guide-card h2 {
+        font-size: 1.2rem;
+      }
+      
+      .intro-card {
+        padding: 1.5rem;
+      }
+      
+      header {
+        padding: 1.5rem 0;
+      }
+      
+      main {
+        padding: 2rem 0;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .guide-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      
+      .guide-card {
+        padding: 1.2rem;
+        margin: 0 5px;
+      }
+      
+      .tag {
+        font-size: 0.8rem;
+        padding: 0.25rem 0.6rem;
+      }
+      
+      .guide-item {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+      }
+    }
+    
+    /* 애니메이션 */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .guide-card {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+    
+    .guide-card:nth-child(even) {
+      animation-delay: 0.1s;
+    }
+    
+    .guide-card:nth-child(odd) {
+      animation-delay: 0.2s;
+    }
+    
+    /* 스크롤바 스타일링 */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(135deg, #5a6fd8, #6a4190);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>💾 외장하드 개인적인 추천 가이드</h1>
+      <p>지금까지 써본 제품들 기준으로 정리</p>
+    </div>
+  </header>
+  
+  <main>
+    <div class="container">
+      <div class="intro-section">
+        <div class="intro-card">
+          <h2 style="color: #2c3e50; margin-bottom: 1rem;">전지우 전용 쉽게 설명</h2>
+        </div>
+      </div>
+      
+      <div class="guide-grid">
+        <div class="guide-card">
+          <h2 data-number="1">용도에 맞는 종류 선택</h2>
+          <ul class="guide-list">
+            <li class="guide-item">
+              <span class="tag">HDD</span>
+              대용량·가성비 중시, 문서/사진/일반 백업용으로 최적
+            </li>
+            <li class="guide-item">
+              <span class="tag">SSD</span>
+              빠른 속도·내구성 중시, 영상 편집/게임/자주 이동하는 경우
+            </li>
+            <li class="guide-item">
+              <span class="tag">USB 메모리</span>
+              극소형 휴대성 최우선, 소용량 파일 위주 사용
+            </li>
+          </ul>
+        </div>
+        
+        <div class="guide-card">
+          <h2 data-number="2">저장 용량 선택</h2>
+          <ul class="guide-list">
+            <li class="guide-item">
+              <span class="tag">1TB</span>
+              문서, 사진 등 기본 백업용으로 충분
+            </li>
+            <li class="guide-item">
+              <span class="tag">2TB</span>
+              동영상, 일반 데이터 저장용 적정 용량
+            </li>
+            <li class="guide-item">
+              <span class="tag">4TB 이상</span>
+              대용량 영상, 게임, 대규모 데이터 저장
+            </li>
+          </ul>
+        </div>
+        
+        <div class="guide-card">
+          <h2 data-number="3">전송 속도 및 연결 방식</h2>
+          <ul class="guide-list">
+            <li class="guide-item">
+              <span class="tag">USB 3.2 Gen 2</span>
+              이상 지원 시 고속 데이터 전송 가능
+            </li>
+            <li class="guide-item">
+              <span class="tag">USB-C / USB 4</span>
+              최신 노트북, 태블릿 호환 필수 체크
+            </li>
+            <li class="guide-item">
+              <span class="tag">USB 3.0</span>
+              일반적인 백업용으로는 충분한 성능
+            </li>
+          </ul>
+        </div>
+        
+        <div class="guide-card">
+          <h2 data-number="4">내구성 및 휴대성</h2>
+          <ul class="guide-list">
+            <li class="guide-item">
+              충격, 방수/방진 등 보호 기능 여부 확인 (자주 들고 다닐 경우 필수)
+            </li>
+            <li class="guide-item">
+              2.5인치가 3.5인치보다 휴대성이 높고 전력 소모 적음
+            </li>
+            <li class="guide-item">
+              콤팩트하고 가벼운 디자인, 실리콘 바디 등 보호 기능도 체크
+            </li>
+          </ul>
+        </div>
+        
+        <div class="guide-card">
+          <h2 data-number="5">데이터 보호 기능</h2>
+          <ul class="guide-list">
+            <li class="guide-item">
+              자동 백업, 암호화 소프트웨어 지원 여부 확인
+            </li>
+            <li class="guide-item">
+              충격 감지 센서, 데이터 손상 방지 설계 기능
+            </li>
+            <li class="guide-item">
+              보안 기능(비밀번호, 전용 소프트웨어 등) 제공 여부
+            </li>
+          </ul>
+        </div>
+        
+        <div class="guide-card">
+          <h2 data-number="6">브랜드 신뢰도 및 A/S</h2>
+          <ul class="guide-list">
+            <li class="guide-item">
+              정품/공식 유통 제품 구매, 긴 A/S(3년 이상) 제공 브랜드 선호
+            </li>
+            <li class="guide-item">
+              데이터 복구 서비스, 고객센터 접근성 등도 중요 고려사항
+            </li>
+          </ul>
+        </div>
+        
+        <div class="guide-card">
+          <h2 data-number="7">가격 및 가성비</h2>
+          <ul class="guide-list">
+            <li class="guide-item">
+              용량 대비 가격, 기능 대비 가격 모두 꼼꼼히 비교
+            </li>
+            <li class="guide-item">
+              너무 저렴한 비정품·미인증 제품은 피하는 것이 안전
+            </li>
+            <li class="guide-item">
+              가격 비교 사이트 활용, 공식몰/신뢰할 수 있는 쇼핑몰에서 구매
+            </li>
+          </ul>
+        </div>
+        
+        <div class="guide-card">
+          <h2 data-number="8">기타 체크포인트</h2>
+          <ul class="guide-list">
+            <li class="guide-item">
+              <span class="tag">디자인/컬러</span>
+              자주 들고 다니는 만큼 개인 취향 반영
+            </li>
+            <li class="guide-item">
+              <span class="tag">호환성</span>
+              Windows, Mac, 스마트폰 등 연결 가능 여부
+            </li>
+            <li class="guide-item">
+              <span class="tag">특수 용도</span>
+              게임 저장, 영상 편집 등 별도 최적화 제품 여부
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="tip-box">
+        <h3>개인적으로 써본 추천 모델들</h3>
+        <div style="margin-top: 1rem;">
+          <p><strong>🔹 HDD 계열:</strong></p>
+          <ul style="margin: 0.5rem 0; padding-left: 1.2rem;">
+            <li><span class="tag">WD My Passport</span> 가장 무난하고 안정적, A/S도 괜찮음</li>
+            <li><span class="tag">씨게이트 Backup Plus</span> 가성비 좋고 속도도 나쁘지 않음</li>
+            <li><span class="tag">삼성 M3</span> 디자인 깔끔하고 발열 적음</li>
+          </ul>
+          <p style="margin-top: 1rem;"><strong>🔹 SSD 계열:</strong></p>
+          <ul style="margin: 0.5rem 0; padding-left: 1.2rem;">
+            <li><span class="tag">삼성 T7</span> 속도 빠르고 발열 관리 좋음, 조금 비쌈</li>
+            <li><span class="tag">샌디스크 Extreme</span> 내구성 좋고 방수 지원</li>
+            <li><span class="tag">WD My Passport SSD</span> 가격 대비 성능 괜찮음</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
